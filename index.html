@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKINIMAL | La ciencia de tu piel, simplificada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. VARIABLES Y ESTILOS GLOBALES --- */
+        :root {
+            --bg-color: #FDFBF7;
+            --accent-color: #E8D7D0;
+            --accent-dark: #D4BBAF;
+            --text-color: #1A1A1A;
+            --white: #FFFFFF;
+            --gray: #717171;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--text-color);
+            color: var(--white);
+            padding: 12px 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--gray);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- 2. NAVBAR --- */
+        header {
+            background-color: rgba(253, 251, 247, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            font-size: 0.9rem;
+        }
+
+        .nav-menu a:hover {
+            opacity: 0.6;
+        }
+
+        .nav-cart {
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--accent-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        /* --- 3. HERO SECTION --- */
+        .hero {
+            padding-top: 70px;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(253,251,247,0.4), rgba(253,251,247,0.4)), 
+                        url('https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=1200') no-repeat center center/cover;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        /* --- 4. VALORES --- */
+        .valores {
+            padding: 80px 0;
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .valor-card {
+            padding: 20px;
+        }
+
+        .valor-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .valor-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .valor-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* --- 5. QUIZ INTERACTIVO --- */
+        .quiz-section {
+            padding: 80px 0;
+            background-color: var(--accent-color);
+            text-align: center;
+        }
+
+        .quiz-container {
+            background-color: var(--white);
+            max-width: 600px;
+            margin: 30px auto 0;
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .quiz-step {
+            display: none;
+        }
+
+        .quiz-step.active {
+            display: block;
+        }
+
+        .quiz-container h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quiz-btn {
+            background: var(--bg-color);
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .quiz-btn:hover {
+            background: var(--accent-dark);
+            border-color: transparent;
+        }
+
+        .quiz-result {
+            display: none;
+        }
+
+        /* --- 6. TIENDA (PRODUCTOS) --- */
+        .tienda {
+            padding: 80px 0;
+        }
+
+        .tienda h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .producto-card {
+            background-color: var(--white);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .producto-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        .producto-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .producto-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .producto-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .producto-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .precio {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        /* --- 7. TESTIMONIOS --- */
+        .testimonios {
+            padding: 80px 0;
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .testimonios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonio-card {
+            background-color: var(--bg-color);
+            padding: 40px;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .stars {
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-style: normal;
+        }
+
+        .testimonio-card h4 {
+            margin-top: 20px;
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* --- 8. FOOTER --- */
+        footer {
+            background-color: var(--text-color);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3, .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+        }
+
+        .footer-col p {
+            color: #A9A9A9;
+            font-size: 0.9rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #A9A9A9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .newsletter-form input {
+            padding: 10px;
+            border: none;
+            flex-grow: 1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .newsletter-form button {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8rem;
+            color: #717171;
+        }
+
+        /* --- RESPONSIVO --- */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo">SKINIMAL</div>
+            <nav class="nav-menu">
+                <a href="#productos">Tienda</a>
+                <a href="#valores">Filosofía</a>
+                <a href="#quiz">Skin Quiz</a>
+            </nav>
+            <div class="nav-cart" id="cart-counter">🛒 Carrito (0)</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>La ciencia de tu piel, simplificada.</h1>
+                <p>No necesitas una rutina de 10 pasos. En SKINIMAL creamos fórmulas esenciales, científicas y honestas para que tu piel respire al natural.</p>
+                <a href="#productos" class="btn">Comprar la Rutina</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="valores" id="valores">
+        <div class="container">
+            <h2>Nuestros Pilares</h2>
+            <div class="valores-grid">
+                <div class="valor-card">
+                    <span class="icon">🌿</span>
+                    <h3>Fórmulas Clean</h3>
+                    <p>Libres de parabenos, sulfatos y crueldad animal. Solo ingredientes puros.</p>
+                </div>
+                <div class="valor-card">
+                    <span class="icon">🔬</span>
+                    <h3>Respaldo Científico</h3>
+                    <p>Activos como el Ácido Hialurónico en su concentración óptima real.</p>
+                </div>
+                <div class="valor-card">
+                    <span class="icon">🌍</span>
+                    <h3>Eco-Consciente</h3>
+                    <p>Envases de vidrio reciclables de impacto ambiental reducido.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quiz-section" id="quiz">
+        <div class="container">
+            <h2>¿No sabes por dónde empezar?</h2>
+            <p>Descubre tu rutina ideal respondiendo este test rápido.</p>
+            
+            <div class="quiz-container" id="quiz-box">
+                <div class="quiz-step active" id="step-1">
+                    <h3>1. ¿Cómo sientes tu piel a mitad del día?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="nextStep(2, 'grasa')">Brillante en todo el rostro</button>
+                        <button class="quiz-btn" onclick="nextStep(2, 'mixta')">Brillante en la frente/nariz, seca en mejillas</button>
+                        <button class="quiz-btn" onclick="nextStep(2, 'seca')">Tirante, opaca o con descamación</button>
+                    </div>
+                </div>
+
+                <div class="quiz-step" id="step-2">
+                    <h3>2. ¿Con qué frecuencia tienes brotes o imperfecciones?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="nextStep(3, 'grasa')">Muy seguido / Constantemente</button>
+                        <button class="quiz-btn" onclick="nextStep(3, 'mixta')">Solo ocasionalmente o por estrés</button>
+                        <button class="quiz-btn" onclick="nextStep(3, 'seca')">Casi nunca, mi problema es la rojez</button>
+                    </div>
+                </div>
+
+                <div class="quiz-step" id="step-3">
+                    <h3>3. ¿Cuál es tu mayor objetivo actual?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="showResult('grasa')">Controlar la grasa y limpiar poros</button>
+                        <button class="quiz-btn" onclick="showResult('mixta')">Equilibrar e iluminar el rostro</button>
+                        <button class="quiz-btn" onclick="showResult('seca')">Hidratar profundamente y calmar</button>
+                    </div>
+                </div>
+
+                <div class="quiz-result" id="quiz-result">
+                    <h3>¡Tu diagnóstico está listo!</h3>
+                    <p id="result-text" style="font-weight: 600; margin-bottom: 15px; color: var(--gray);"></p>
+                    <p id="result-product" style="margin-bottom: 25px;"></p>
+                    <button class="btn" onclick="restartQuiz()">Reiniciar Test</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tienda" id="productos">
+        <div class="container">
+            <h2>Los 3 Esenciales</h2>
+            <div class="productos-grid">
+                
+                <div class="producto-card">
+                    <img src="https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&q=80&w=400" alt="Limpiador" class="producto-img">
+                    <div class="producto-info">
+                        <h3>Balance Cleanser</h3>
+                        <p>Limpiador en gel con aminoácidos. Remueve impurezas delicadamente sin alterar la barrera natural.</p>
+                        <div class="producto-footer">
+                            <span class="precio">$22.00</span>
+                            <button class="btn" onclick="agregarAlCarrito()">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="producto-card">
+                    <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=400" alt="Serum" class="producto-img">
+                    <div class="producto-info">
+                        <h3>Hydro-Glow Serum</h3>
+                        <p>Ácido Hialurónico Puro al 2% + Vitamina B5. Hidratación celular profunda con efecto relleno inmediato.</p>
+                        <div class="producto-footer">
+                            <span class="precio">$34.00</span>
+                            <button class="btn" onclick="agregarAlCarrito()">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="producto-card">
+                    <img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=400" alt="Crema" class="producto-img">
+                    <div class="producto-info">
+                        <h3>Barrier Repair Cream</h3>
+                        <p>Crema hidratante diaria enriquecida con Ceramidas y Niacinamida. Calma la rojez y unifica el tono.</p>
+                        <div class="producto-footer">
+                            <span class="precio">$28.00</span>
+                            <button class="btn" onclick="agregarAlCarrito()">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonios">
+        <div class="container">
+            <h2>Opiniones Reales</h2>
+            <div class="testimonios-grid">
+                <div class="testimonio-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Mi piel solía estar irritada por usar tantos químicos. Llevo 3 semanas con Skinimal y mi rostro está radiante y sano."</p>
+                    <h4>– Sofía R., Piel Sensible</h4>
+                </div>
+                <div class="testimonio-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Texturas súper ligeras que no dejan sensación grasosa. Me encanta que los frascos sean de vidrio reciclable."</p>
+                    <h4>– Mateo V., Piel Mixta</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SKINIMAL</h3>
+                    <p>Belleza consciente, rutinas minimalistas.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Menú</h4>
+                    <ul>
+                        <li><a href="#productos">Tienda</a></li>
+                        <li><a href="#valores">Filosofía</a></li>
+                        <li><a href="#quiz">Skin Quiz</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Únete al Club de la Piel Sana</h4>
+                    <p>Recibe consejos dermatológicos y un 10% de descuento.</p>
+                    <form class="newsletter-form" id="newsletter" onsubmit="handleNewsletter(event)">
+                        <input type="email" placeholder="Tu correo electrónico" required id="news-email">
+                        <button type="submit">Unirse</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SKINIMAL. Tarea Escolar - Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- LÓGICA DEL CARRITO ---
+        let cartCount = 0;
+        function agregarAlCarrito() {
+            cartCount++;
+            document.getElementById('cart-counter').innerText = `🛒 Carrito (${cartCount})`;
+            alert('¡Producto añadido con éxito al carrito!');
+        }
+
+        // --- LÓGICA DEL SKIN QUIZ INTERACTIVO ---
+        let respuestas = [];
+
+        function nextStep(step, answer) {
+            respuestas.push(answer);
+            // Ocultar paso actual
+            document.querySelector('.quiz-step.active').classList.remove('active');
+            // Mostrar siguiente paso
+            document.getElementById(`step-${step}`).classList.add('active');
+        }
+
+        function showResult(answer) {
+            respuestas.push(answer);
+            document.querySelector('.quiz-step.active').classList.remove('active');
+            
+            // Lógica para calcular el resultado predominante
+            const conteo = {};
+            respuestas.forEach(x => { conteo[x] = (conteo[x] || 0) + 1; });
+            const resultadoFinal = Object.keys(conteo).reduce((a, b) => conteo[a] > conteo[b] ? a : b);
+
+            const resultText = document.getElementById('result-text');
+            const resultProduct = document.getElementById('result-product');
+            
+            if(resultadoFinal === 'grasa') {
+                resultText.innerText = "Tienes tendencia a Piel Grasa.";
+                resultProduct.innerText = "Te recomendamos enfocar de inmediato tu rutina en nuestro 'Balance Cleanser' para regular el sebo y limpiar poros.";
+            } else if(resultadoFinal === 'seca') {
+                resultText.innerText = "Tienes tendencia a Piel Seca o Deshidratada.";
+                resultProduct.innerText = "Tu piel necesita nutrición urgente. Tu producto ideal es el 'Hydro-Glow Serum' combinado con la 'Barrier Repair Cream'.";
+            } else {
+                resultText.innerText = "Tienes Piel Mixta.";
+                resultProduct.innerText = "Tu piel requiere equilibrio. Te sugerimos adquirir el Kit de los 3 Esenciales para balancear las zonas grasas y secas.";
+            }
+
+            document.getElementById('quiz-result').style.display = 'block';
+        }
+
+        function restartQuiz() {
+            respuestas = [];
+            document.getElementById('quiz-result').style.display = 'none';
+            document.getElementById('step-1').classList.add('active');
+        }
+
+        // --- LÓGICA DEL FORMULARIO NEWSLETTER ---
+        function handleNewsletter(event) {
+            event.preventDefault();
+            const email = document.getElementById('news-email').value;
+            alert(`¡Gracias por suscribirte con el correo: ${email}! Hemos aplicado tu 10% de descuento.`);
+            document.getElementById('news-email').value = '';
+        }
+    </script>
+</body>
+</html>
